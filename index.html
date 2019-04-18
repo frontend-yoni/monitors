@@ -1,0 +1,89 @@
+<html lang="en">
+<head>
+    <!-- inject:css -->
+    <link rel="stylesheet" href="src/Common/resources/JJCommonStyle.css">
+    <link rel="stylesheet" href="src/DragAndDrop/resources/SportyDragAndDrop.css">
+    <link rel="stylesheet" href="src/Screens/resources/Screens.css">
+    <!-- endinject -->
+
+    <!-- inject:js -->
+    <script src="src/Screens/common/DimaSvgUtils.js"></script>
+    <script src="src/Common/FormattingUtil.js"></script>
+    <script src="src/Common/JJGeneralUtils.js"></script>
+    <script src="src/Common/JJPower.js"></script>
+    <script src="src/Screens/common/screen/ScreenComponent.js"></script>
+    <script src="src/Screens/common/screen/MiniScreenDivsComponent.js"></script>
+    <script src="src/Screens/table/TableComponent.js"></script>
+    <script src="src/Screens/table/TableLayoutManager.js"></script>
+    <script src="src/Common/svg/SVGPathUtil.js"></script>
+    <script src="src/Common/svg/SVGPieHelper.js"></script>
+    <script src="src/DragAndDrop/dom/SportyDDCloneUtil.js"></script>
+    <script src="src/DragAndDrop/dom/SportyDDDomUtil.js"></script>
+    <script src="src/DragAndDrop/mock/SportyDDShowcaseMock.js"></script>
+    <script src="src/DragAndDrop/main/SportyDragAndDropManager.js"></script>
+    <script src="src/DragAndDrop/scroll/DragAndDropScrollManager.js"></script>
+    <script src="src/Screens/room/FullRoomComponent.js"></script>
+    <script src="src/Screens/room/FullRoomLayoutManager.js"></script>
+    <script src="src/Screens/wall/WallComponent.js"></script>
+    <script src="src/Screens/wall/WallLayoutManager.js"></script>
+    <script src="src/Screens/common/CommonLayout.js"></script>
+    <script src="src/Screens/data/ScreenDataObj.js"></script>
+    <script src="src/Screens/data/StaticDataStuff.js"></script>
+    <script src="src/Screens/dragAndDrop/WidgetDDCloneUtil.js"></script>
+    <script src="src/Screens/dragAndDrop/WidgetDDManager.js"></script>
+
+    <script src="src/Screens/COMPLETE/CompleteMonitorPage.js"></script>
+    <script src="src/Screens/leftList/LeftWidgetSelectionComponent.js"></script>
+    <script src="src/Screens/leftList/SingleWidgetView.js"></script>
+    <script src="src/Screens/bottomList/BottomWidgetRolodex.js"></script>
+    <script src="src/Screens/data/CompleteDataStructure.js"></script>
+    <script src="src/DragAndDrop/specific/simple/SportySimpleListDD.js"></script>
+    <script src="src/DragAndDrop/specific/util/SportyListDnDInteractionUtil.js"></script>
+    <!-- endinject -->
+</head>
+
+<style>
+    body {
+        position: absolute;
+        margin: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .testDiv {
+        position: absolute;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<script>
+    let testDiv;
+    let comp = new CompleteMonitorPage();
+    let completeData = CompleteDataStructure.getInstance();
+
+    let tableList = [new ScreenDataObj(3), new ScreenDataObj(2,2), new ScreenDataObj()];
+    let wallDataObj = new ScreenDataObj(3,3);
+
+    window.onload = function () {
+        testDiv = document.querySelector('.testDiv');
+        completeData.populateMockData();
+
+        comp.setExternalDiv(testDiv);
+        comp.setData(completeData);
+        comp.drawComponent();
+    }
+
+    window.onresize = function () {
+        comp.resize();
+    }
+</script>
+
+<body>
+    <div class="testDiv">
+
+    </div>
+</body>
+</html>

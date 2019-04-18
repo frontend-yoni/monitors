@@ -1,0 +1,740 @@
+p {
+    font-family: Arial;
+    font-size: 12px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.WidgetDragAndDropGo * {
+    cursor: grab !important;
+}
+
+/** COMPLETE **/
+:root {
+    --leftListFullWidth: 150px;
+    --bottomRolodexFullHeight: 100px;
+    --bottomRolodexEntryHeight: 80px;
+    --bottomRolodexEntryWidth: 42px;
+    --widgetIconDivSize: 42px;
+    --widgetIconSVGSize: 32px;
+
+    --ddReleaseAnimationDuration: 0.2s;
+    --ddDismissAnimationDuration: 0.4s;
+    --bottomWidgetSizeAnimationDuration: 0.2s;
+    --ddNonDroppableSectionOpacity: 0.5;
+}
+
+.CompleteMonitorPage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.MonitorPageLeftListDiv {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--leftListFullWidth);
+    background-image: linear-gradient(141deg, rgba(236, 255, 247, 0.5) 0%, rgba(201, 250, 255, 0.5) 51%, rgba(143, 225, 255, 0.5) 75%);
+    box-sizing: content-box;
+    border-right: 1px dotted #333;
+    overflow: hidden;
+}
+
+.MonitorPageLeftListDiv:hover {
+    overflow-y: auto;
+}
+
+.MonitorPageScreenRoomDiv {
+    position: absolute;
+    left: var(--leftListFullWidth);
+    top: 0;
+    bottom: var(--bottomRolodexFullHeight);
+    right: 0;
+}
+
+.MonitorPageBottomRolodexDiv {
+    position: absolute;
+    left: var(--leftListFullWidth);
+    right: 0;
+    bottom: 0;
+    height: var(--bottomRolodexFullHeight);
+    background-image: linear-gradient(-41deg, rgba(236, 255, 247, 0.3) 0%, rgba(201, 250, 255, 0.3) 51%, rgba(143, 225, 255, 0.3) 75%);
+}
+
+/** COMPLETE End. **/
+
+.RoomBackgroundDiv {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.RoomBackgroundDiv > svg {
+    width: 100%;
+    height: 100%;
+}
+
+/** Screen **/
+:root {
+    --borderWidth: 8px;
+    --borderRadius: 8px;
+    --screenBottomPosition: 30px;
+    --extraHitAreaWidth: 20px;
+    --dottedHighlightExtraPad: 14px;
+    --borderColor: #333;
+    --divierColor: #666;
+
+    --animationDuration: 0.4s;
+    --animationDuration_opacity: calc(var(--animationDuration) * 0.5);
+    --baseWidthVariation: 2;
+    --screenBGColor: linear-gradient(to bottom right, #5fb2fb, #fff);
+    --baseWidth: calc(45px * var(--baseWidthVariation));
+}
+
+.ScreenComponentMainDiv {
+    transition: width var(--animationDuration), height var(--animationDuration), left var(--animationDuration), opacity var(--animationDuration_opacity);
+}
+
+.ScreenComponentBorderDiv {
+    position: absolute;
+    box-sizing: border-box;
+    border: 3px solid #000;
+
+    left: calc(-1 * var(--borderWidth));
+    top: calc(-1 * var(--borderWidth));
+    right: calc(-1 * var(--borderWidth));
+    bottom: calc(-1 * var(--borderWidth));
+    border-radius: var(--borderRadius);
+    background-color: var(--borderColor);
+}
+
+.ScreenComponentBGDiv {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--screenBGColor);
+    border-radius: 3px;
+}
+
+.ScreenComponentBaseSVG {
+    fill: #000;
+    position: absolute;
+    width: var(--baseWidth);
+    top: calc(100% + var(--borderWidth) + 2px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.ScreenButtonsArea {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    display: none;
+}
+
+.ScreenComponentMiniScreensDiv {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.WidgetDragAndDropGo .ScreenComponentMiniScreensDiv {
+
+}
+
+.MiniScreenDiv {
+    position: absolute;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.MiniScreenDiv:hover {
+    /*background: rgba(0, 0, 100, 0.05);*/
+}
+
+.MiniScreenDiv.dropHintMiniScreen {
+    box-shadow: inset 0 0 50px aliceblue;
+}
+
+.MiniScreenDiv.dropHintMiniScreen .MiniScreenWidgetDiv {
+    opacity: 0.5;
+}
+
+.MiniScreenWidgetDiv {
+    width: var(--widgetIconDivSize);
+    height: var(--widgetIconDivSize);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.MiniScreenWidgetDiv > svg {
+    width: var(--widgetIconSVGSize);
+    height: var(--widgetIconSVGSize);
+}
+
+.MiniScreenDiv[hasWidget="true"]:hover .MiniScreenWidgetDeleteButton {
+    display: block;
+}
+
+.WidgetDragAndDropGo .MiniScreenDiv[hasWidget="true"] .MiniScreenWidgetDeleteButton {
+    display: none;
+}
+
+.MiniScreenWidgetDeleteButton {
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+}
+
+.MiniScreenWidgetDeleteButton > svg {
+    fill: #000;
+    transform: rotate(45deg);
+    transform-origin: center;
+}
+
+/** Mini Screen End **/
+
+.ScreenButton {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: all;
+}
+
+.ScreenButton > svg {
+    width: 20px;
+    height: 20px;
+    background: beige;
+    border-radius: 50%;
+}
+
+.ScreenMinusButton > svg {
+    fill: #ff695c;
+}
+
+.ScreenPlusButton > svg {
+    fill: #2b9f00;
+}
+
+.ScreenDeleteButton > svg {
+    fill: #000;
+    transform: rotate(45deg);
+    transform-origin: center;
+}
+
+.ScreenButton:hover {
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.ScreenButton:hover > svg {
+    background: white;
+}
+
+.ScreenPlusButton {
+
+}
+
+.ScreenWidthPlusButton {
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.ScreenHeightPlusButton {
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.ScreenMinusButton_Width {
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.ScreenMinusButton_Height {
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.ScreenDeleteButton {
+    top: -15px;
+    right: -15px;
+}
+
+.ScreenComponentMainDiv.BeforeRemoveScreen {
+    transition: none;
+}
+
+.ScreenComponentMainDiv.RemoveScreen {
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+}
+
+.ScreenComponentMainDiv.RemoveScreen .ScreenComponentBorderDiv {
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+}
+
+.ScreenComponentMainDiv.RemoveScreen .ScreenComponentBGDiv {
+    left: var(--borderWidth);
+    top: var(--borderWidth);
+    right: var(--borderWidth);
+    bottom: var(--borderWidth);
+}
+
+.ScreenComponentMainDiv.RemoveScreen .ScreenComponentBaseSVG {
+    transition: width var(--animationDuration);
+    top: calc(100% + 2px);
+    width: 0;
+}
+
+.ScreenComponentMainDiv.FocusedScreen .ScreenButtonsArea {
+    display: block;
+}
+
+.ScreenComponentMainDiv.RemoveScreen .ScreenButtonsArea {
+    display: none;
+}
+
+.ScreenComponentMainDiv.RemoveScreen .ScreenComponentSubDivideContainer {
+    display: none;
+}
+
+.ScreenComponentSubDivideContainer {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+.ScreenComponentSubDivideContainer .ScreenSubDivideDiv {
+    position: absolute;
+    transition: width var(--animationDuration), height var(--animationDuration);
+}
+
+.ScreenSubDivideDiv.ScreenSubDivideDiv_Row {
+    left: 0;
+    right: 0;
+    height: 0;
+    border-top: 1px dashed var(--divierColor);
+}
+
+.ScreenSubDivideDiv.ScreenSubDivideDiv_Column {
+    top: 0;
+    bottom: 0;
+    width: 0;
+    border-right: 1px dashed var(--divierColor);
+}
+
+.ScreenComponentExtraHitArea {
+    position: absolute;
+    left: calc(-1 * var(--extraHitAreaWidth));
+    right: calc(-1 * var(--extraHitAreaWidth));
+    bottom: calc(-1 * var(--extraHitAreaWidth));
+    top: calc(-1 * var(--extraHitAreaWidth));
+    box-sizing: border-box;
+}
+
+.TableComponentScreenWrapper .ScreenComponentExtraHitArea {
+    bottom: calc(-1 * var(--screenBottomPosition));
+}
+
+.ScreenComponentDottedHighlight {
+    border: 2px dashed #666;
+    border-radius: 6px;
+    display: none;
+    position: absolute;
+    left: calc(-1 * var(--dottedHighlightExtraPad));
+    right: calc(-1 * var(--dottedHighlightExtraPad));
+    bottom: calc(-1 * var(--dottedHighlightExtraPad));
+    top: calc(-1 * var(--dottedHighlightExtraPad));
+
+}
+
+/** Table **/
+.ActualTableDiv {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.TableComponentScreenWrapper {
+    position: absolute;
+    bottom: var(--screenBottomPosition);
+}
+
+.TableComponentAddButton {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 0;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    bottom: 60px;
+}
+
+.TableComponentAddButton > svg {
+    width: 24px;
+    height: 24px;
+    background: beige;
+    fill: #4564ff;
+    border-radius: 50%;
+}
+
+.TableComponentAddButton:hover > svg {
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+    background: #fff;
+}
+
+/** Wall **/
+.WallScreenDiv {
+    position: absolute;
+}
+
+.WallScreenDiv .ScreenComponentBaseSVG {
+    display: none;
+}
+
+.WallScreenDiv.ScreenComponentMainDiv {
+    transition: top var(--animationDuration), width var(--animationDuration), height var(--animationDuration), left var(--animationDuration), opacity var(--animationDuration_opacity);
+}
+
+.CompleteRoomWallDiv.emptyWall .WallComponentAddButton {
+    display: flex;
+}
+
+.WallComponentAddButton {
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    display: none;
+}
+
+.WallComponentAddButton > svg {
+    width: 36px;
+    height: 36px;
+    background: beige;
+    fill: #4564ff;
+    border-radius: 50%;
+}
+
+.WallComponentAddButton:hover > svg {
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+    background: #fff;
+}
+
+/** Room **/
+.root {
+    --animationDuration: 400ms;
+}
+
+.CompleteRoomDiv {
+    overflow: auto;
+}
+
+.CompleteRoomWallContainerDiv {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
+    width: 100%;
+}
+
+.CompleteRoomWallDiv {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    transition: top var(--animationDuration);
+}
+
+.CompleteRoomTableDiv {
+    transition: top var(--animationDuration), height var(--animationDuration);
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.CompleteRoomBottomPadDiv {
+    position: absolute;
+    left: 0;
+    height: 1px;
+    width: 1px;
+    pointer-events: none;
+}
+
+/** Left List **/
+.LeftListInnerListDiv {
+
+}
+
+.LeftListWidgetDiv {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+    position: relative;
+}
+
+.LeftListWidgetBottomBorder {
+    position: absolute;
+    bottom: 0;
+    height: 1px;
+    left: 0;
+    box-sizing: border-box;
+    border-bottom: 1px dotted #999;
+}
+
+.LeftListIconDiv {
+    width: var(--widgetIconDivSize);
+    height: var(--widgetIconDivSize);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    cursor: grab;
+}
+
+.LeftListIconDiv > svg {
+    width: var(--widgetIconSVGSize);
+    height: var(--widgetIconSVGSize);
+}
+
+.LeftListNameP {
+    overflow: hidden;
+    margin: 0;
+    margin-top: 2px;
+    text-align: center;
+    max-height: 38px;
+}
+
+/** Bottom Rolodex **/
+.BottomWidgetRolodexScrollDiv {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    right: 10px;
+    bottom: 0;
+    overflow-x: hidden;
+}
+
+.MonitorPageBottomRolodexDiv:hover .BottomWidgetRolodexScrollDiv {
+    overflow-x: auto;
+}
+
+.BottomWidgetCuteContainerBox {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    right: 10px;
+    border: 2px dashed black;
+    border-radius: 10px;
+}
+
+.BottomWidgetRolodexListDiv {
+    position: absolute;
+    left: 0;
+    top: 0;
+    box-sizing: border-box;
+    padding: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.BottomWidgetEntryDiv {
+    flex-basis: var(--bottomRolodexEntryWidth);
+    width: var(--bottomRolodexEntryWidth);
+    height: 100%;
+    flex-shrink: 0;
+    flex-grow: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.BottomWidgetEntryDivDeleteButton {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 3px;
+    width: 18px !important;
+    height: 18px !important;
+    display: none;
+}
+
+.BottomWidgetEntryDivDeleteButton > svg {
+    fill: #000;
+    transform: rotate(45deg);
+    transform-origin: center;
+    width: 18px !important;
+    height: 18px !important;
+}
+
+.BottomWidgetIconDiv {
+    width: var(--widgetIconDivSize);
+    height: var(--widgetIconDivSize);
+    flex-shrink: 0;
+    flex-grow: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.BottomWidgetIconDiv > svg {
+    width: var(--widgetIconSVGSize);
+    height: var(--widgetIconSVGSize);
+}
+
+/** Drag and Drop **/
+.WidgetDDCloneContainer {
+    position: fixed;
+    z-index: 9999999;
+    opacity: 1;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: none !important;
+}
+
+.WidgetDDCloneContainer.CloneFadeAway {
+    opacity: 0.25;
+}
+
+.WidgetDDCloneContainer > .WidgetDDActualClone {
+
+}
+
+.WidgetDDCloneContainer > .WidgetDDCloneBackground {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    opacity: 0.5;
+    transition: opacity var(--ddReleaseAnimationDuration);
+    z-index: -1;
+}
+
+.WidgetDDCloneReleaseAnimation {
+    transition: var(--ddReleaseAnimationDuration) transform, var(--ddReleaseAnimationDuration) opacity;
+}
+
+.WidgetDDCloneReleaseAnimation.dismissClone{
+    opacity: 0;
+    transition: var(--ddDismissAnimationDuration) transform, var(--ddDismissAnimationDuration) opacity;
+}
+
+.WidgetDDCloneReleaseAnimation.dismissClone > .WidgetDDCloneBackground {
+    transition: opacity var(--ddDismissAnimationDuration);
+}
+
+.WidgetDDCloneContainer.WidgetDDCloneReleaseAnimation > .WidgetDDCloneBackground {
+    opacity: 0;
+}
+
+.WidgetDragAndDropGo_Screen .MonitorPageScreenRoomDiv .ScreenComponentDottedHighlight {
+    display: block;
+}
+
+.WidgetDragAndDropGo_Screen .MonitorPageBottomRolodexDiv {
+    opacity: var(--ddNonDroppableSectionOpacity);
+    pointer-events: none;
+}
+
+.WidgetDragAndDropGo_Rolodex .MonitorPageScreenRoomDiv {
+    opacity: var(--ddNonDroppableSectionOpacity);
+    pointer-events: none;
+}
+
+.WidgetDragAndDropGo_Rolodex .MonitorPageBottomRolodexDiv .BottomWidgetCuteContainerBox {
+    box-shadow: inset 0 0 25px white, 0 0 5px;
+    border: none;
+}
+
+.BottomWidgetEntryDiv.BottomWidgetEntryHint {
+    overflow: hidden;
+}
+
+.BottomWidgetEntryDiv.BottomWidgetEntryHint .BottomWidgetIconDiv {
+    overflow: hidden;
+    opacity: 0.5;
+    transition: width var(--bottomWidgetSizeAnimationDuration);
+}
+
+.BottomWidgetEntryDiv.BottomWidgetEntryHint.hiddenHint {
+    width: 0;
+    flex-basis: 0;
+}
+
+.BottomWidgetEntryDiv.BottomWidgetEntryHint.hiddenHint .BottomWidgetIconDiv {
+    width: 0;
+}
+
+.BottomWidgetEntryDiv.BottomWidgetEntryHint.hiddenHint.hiddenHintNoAnimation .BottomWidgetIconDiv {
+    transition: none;
+}
+
+.BottomWidgetEntryDiv:hover .BottomWidgetEntryDivDeleteButton {
+    display: block;
+}
+
+.WidgetDragAndDropGo_Rolodex .MonitorPageBottomRolodexDiv .BottomWidgetEntryDiv:hover .BottomWidgetEntryDivDeleteButton {
+    display: none;
+}
+
+.BottomWidgetEntryDiv.RemoveBottomWidget {
+    overflow: hidden;
+    flex-basis: 0px;
+    transition: flex-basis var(--bottomWidgetSizeAnimationDuration);
+}
+
+.BottomWidgetEntryDiv.RemoveBottomWidget > div:not(.WidgetDDCloneContainer){
+    opacity: 0;
+}

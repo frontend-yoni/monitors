@@ -1,0 +1,111 @@
+<html lang="en">
+<head>
+    <script src="../Common/JJPower.js"></script>
+</head>
+
+<style>
+    html, body {
+        position: absolute;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        background: black;
+    }
+
+    .testDiv1 {
+        position: absolute;
+        left: 100px;
+        top: 100px;
+        width: 50px;
+        height: 150px;
+        background: aqua;
+    }
+
+    .testDiv2 {
+        position: absolute;
+        left: 100px;
+        top: 250px;
+        width: 50px;
+        height: 150px;
+        background: orangered;
+    }
+
+    .bigOne{
+        position: absolute;
+        left: 100px;
+        top: 600px;
+        width: 50px;
+        height: 8250px;
+        background: purple;
+    }
+</style>
+
+<script>
+    let testDiv1;
+    let testDiv2;
+
+    let clickedDiv;
+    window.onload = function () {
+        testDiv1 = JJPower.query('.testDiv1');
+        testDiv2 = JJPower.query('.testDiv2');
+
+        testDiv1.addEventListener('click', onDivClick1);
+        testDiv2.addEventListener('click', onDivClick2);
+       // document.addEventListener('click', onDocClick, true);
+
+        document.addEventListener('scroll', onScroll);
+    }
+
+    function onScroll(e){
+        if(!window.scrollCount){
+            window.scrollCount = 1;
+        }
+        window.scrollCount++;
+
+        let x = Math.random() * 100;
+
+        testDiv1.getBoundingClientRect();
+        testDiv1.style.transform  = `translateX(${x}px)`;
+    }
+
+    function onDivClick1(e) {
+        clickedDiv = e.target;
+        requestAnimationFrame(frameFunc1);
+    }
+
+    function onDivClick2(e) {
+        clickedDiv = e.target;
+        requestAnimationFrame(frameFunc2);
+    }
+
+    function frameFunc1(e) {
+        let divArr = [];
+        let newDiv;
+        for(let i=0; i<100; i++){
+            newDiv = clickedDiv.jjAppend('div');
+            divArr.push(newDiv);
+            getComputedStyle(newDiv).left;
+        }
+    }
+
+    function frameFunc2(e) {
+        let divArr = [];
+        let newDiv;
+        for(let i=0; i<100; i++){
+            newDiv = clickedDiv.jjAppend('div');
+            divArr.push(newDiv);
+        }
+    }
+</script>
+
+<body>
+    <div class="testDiv1">
+    </div>
+
+    <div class="testDiv2">
+    </div>
+
+    <div class="bigOne">
+    </div>
+</body>
+</html>

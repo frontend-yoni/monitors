@@ -1,0 +1,157 @@
+<html lang="en">
+<head>
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../Common/resources/JJCommonStyle.css">
+    <link rel="stylesheet" href="resources/SportyDragAndDrop.css">
+    <link rel="stylesheet" href="../Screens/resources/Screens.css">
+    <!-- endinject -->
+
+    <!-- inject:js -->
+    <script src="../Common/FormattingUtil.js"></script>
+    <script src="../Common/JJGeneralUtils.js"></script>
+    <script src="../Common/JJPower.js"></script>
+    <script src="../Screens/common/screen/ScreenComponent.js"></script>
+    <script src="../Screens/table/TableComponent.js"></script>
+    <script src="../Screens/table/TableLayoutManager.js"></script>
+    <script src="../Common/svg/SVGPathUtil.js"></script>
+    <script src="../Common/svg/SVGPieHelper.js"></script>
+    <script src="dom/SportyDDCloneUtil.js"></script>
+    <script src="dom/SportyDDDomUtil.js"></script>
+    <script src="mock/SportyDDShowcaseMock.js"></script>
+    <script src="main/SportyDragAndDropManager.js"></script>
+    <script src="scroll/DragAndDropScrollManager.js"></script>
+    <script src="../Screens/room/FullRoomComponent.js"></script>
+    <script src="../Screens/room/FullRoomLayoutManager.js"></script>
+    <script src="../Screens/wall/WallComponent.js"></script>
+    <script src="../Screens/wall/WallLayoutManager.js"></script>
+    <script src="../Screens/common/CommonLayout.js"></script>
+    <script src="../Screens/data/ScreenDataObj.js"></script>
+    <script src="specific/simple/SportySimpleListDD.js"></script>
+    <script src="specific/util/SportyListDnDInteractionUtil.js"></script>
+    <!-- endinject -->
+</head>
+
+<style>
+    html, body {
+        position: absolute;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        grid-template-columns: auto;
+    }
+
+    .testDiv {
+        width: 500px;
+        height: 500px;
+        overflow: auto;
+        max-width: 80%;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .testDiv {
+            width: 80%;
+        }
+    }
+
+    @media only screen and (max-height: 1000px) {
+        .testDiv {
+            height: 75vh;
+        }
+    }
+
+    .item {
+        background-color: white;
+        box-shadow: none;
+        min-height: 40px;
+        user-select: none;
+        color: rgb(77, 77, 77);
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        border-radius: 2px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: grey;
+        border-image: initial;
+        padding: 8px;
+        margin-left: 5px;
+        margin-right: 5px;
+
+        font-size: 16px;
+        font-family: Arial;
+    }
+
+    .SportySimpleListDDDrpHint {
+        margin-left: 5px !important;
+        margin-right: 5px !important;
+    }
+</style>
+
+<script>
+    let table1;
+    let table2;
+    let ddManager1 = new SportySimpleListDD(true);
+    // let ddManager2 = new SportySimpleListDD();
+
+    window.onload = function () {
+        table1 = JJPower.query('#table1');
+        table2 = JJPower.query('#table2');
+
+        ddManager1.setListDiv(table1);
+        // ddManager2.setListDiv(table2);
+    }
+</script>
+
+<body>
+    <div id="table1" class="testDiv">
+        <div class="item">Simcha</div>
+        <div class="item">Shai</div>
+        <div class="item">Jenny</div>
+        <div class="item">Romi</div>
+        <div class="item">Itay</div>
+        <div class="item">Yoni</div>
+
+        <div class="item">Yana</div>
+        <div class="item">Alex</div>
+        <div class="item">Andrei 1</div>
+        <div class="item">Andrei 3</div>
+
+        <div class="item">Yakir</div>
+        <div class="item">Reginold</div>
+        <div class="item">Yohai</div>
+        <div class="item">Noam</div>
+
+        <div class="item">Nikita</div>
+        <div class="item">Godeon</div>
+        <div class="item">Yael</div>
+        <div class="item">Boz</div>
+
+        <div class="item">Andrei 4</div>
+        <div class="item">MUST</div>
+        <div class="item">Marketo</div>
+        <div class="item">Adobe</div>
+        <div class="item">Saluto</div>
+
+        <div class="item">Pen</div>
+        <div class="item">Cellotape</div>
+        <div class="item">Scissors</div>
+        <div class="item">Minion Mug</div>
+        <div class="item">Fiber 1 Bowl</div>
+    </div>
+    <!--  <div id="table2" class="testDiv">
+          <div class="item">Simcha</div>
+          <div class="item">Shai</div>
+          <div class="item">Jenny</div>
+          <div class="item">Romi</div>
+          <div class="item">Itay</div>
+          <div class="item">Yoni</div>
+
+          <div class="item">Yana</div>
+          <div class="item">Alex</div>
+          <div class="item">Andrei 1</div>
+          <div class="item">Andrei 3</div>
+      </div>-->
+</body>
+</html>
