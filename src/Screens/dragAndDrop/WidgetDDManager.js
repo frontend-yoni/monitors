@@ -1,6 +1,7 @@
 function WidgetDDManager() {
     let me = this;
     let cloneUtil = new WidgetDDCloneUtil(me);
+    let scrollManager = new WidgetDDScrollManager();
     let staticDataStuff = StaticDataStuff.getInstance();
     let html = JJPower.query('html');
     /** Externally Set **/
@@ -9,6 +10,7 @@ function WidgetDDManager() {
     let dropTarget;
     let dropTargetComponent;
     let leftListComponent;
+    let screenRoomDiv;
     /** Internally Set **/
     let ddItem;
     let prevEvent;
@@ -27,6 +29,10 @@ function WidgetDDManager() {
 
     this.setLeftListComponent = function (leftListComponentI) {
         leftListComponent = leftListComponentI;
+    };
+
+    this.setScreenRoomDiv = function (screenRoomDivI) {
+        screenRoomDiv = screenRoomDivI;
     };
 
     this.getWidgetItemBCRect = function (widgetIndex) {
@@ -82,11 +88,18 @@ function WidgetDDManager() {
         if (currentEvent !== prevEvent) {
             runMoveFrame();
         }
+        runScrollFrame(frameTime);
         prevEvent = currentEvent;
     }
 
     function runMoveFrame() {
         cloneUtil.runCloneMoveFrame(currentEvent);
+    }
+
+    function runScrollFrame(frameTime) {
+        if (widgetData.dragToScreen) {
+            scrollManager.runScrollFrame(currentEvent, frameTime);
+        }
     }
 
     /** Mouse **/
@@ -98,6 +111,7 @@ function WidgetDDManager() {
             document.jjAddEventListener('mouseup', onMouseUp);
             document.jjAddEventListener('mousemove', onMouseMove);
             startEvent = e;
+            currentEvent = e;
             isDragging = true;
             onDragStart(e);
         }
@@ -125,9 +139,12 @@ function WidgetDDManager() {
     /** DD Life Cycle **/
     function onDragStart(e) {
         widgetData = staticDataStuff.getWidgetItemData(ddItem.jjGetIndex());
+        scrollManager.setScrollContainer(screenRoomDiv, true, true);
+
         applyHTMLClasses();
 
         cloneUtil.reactToDragStart(ddItem, startEvent);
+        scrollManager.activateNow(startEvent);
         startDDManagementAnimation();
     }
 

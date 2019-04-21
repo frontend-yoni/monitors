@@ -15,6 +15,8 @@ function LeftWidgetSelectionComponent(directPapaComponent, ddManager) {
         //Structure
     let listDiv;
     let widgetDivArr = [];
+    //Data
+    let lastScreenIndex;
 
     /** Public APIs **/
     this.setExternalDiv = function (divHTML) {
@@ -55,11 +57,44 @@ function LeftWidgetSelectionComponent(directPapaComponent, ddManager) {
                 width: listWidth + 'px'
             });
 
-        for (let i = 0; i < staticData.getWidgetListLength(); i++) {
-            addWidget(i);
-        }
+        lastScreenIndex = staticData.getScreenWidgetCount() - 1;
+        addScreenWidgets();
+        addOtherWidgets();
 
         ddManager.setAsDraggable(listDiv, 'LeftListIconDiv');
+    }
+
+    function addScreenWidgets() {
+        let startIndex = 0;
+        let endIndex = lastScreenIndex;
+        addListSection(startIndex, endIndex, 'Screen')
+    }
+
+    function addOtherWidgets() {
+        let startIndex = lastScreenIndex + 1;
+        let endIndex = staticData.getWidgetListLength() - 1;
+        addListSection(startIndex, endIndex, 'Other')
+    }
+
+    function addListSection(startIndex, endIndex, sectionTitleText) {
+        addTitle(sectionTitleText);
+        for (let i = startIndex; i < endIndex + 1; i++) {
+            addWidget(i);
+        }
+    }
+
+    function addTitle(sectionTitleText) {
+        let titleDiv = listDiv.jjAppend('div')
+            .jjAddClass('LeftListSectionTitleDiv');
+
+        titleDiv.jjAppend('div')
+            .jjAddClass('SectionTitleBorder', 'SectionTitleLeftBorder');
+
+        titleDiv.jjAppend('p')
+            .jjText(sectionTitleText);
+
+        titleDiv.jjAppend('div')
+            .jjAddClass('SectionTitleBorder', 'SectionTitleRightBorder');
     }
 
     function addWidget(widgetIndex) {
@@ -67,6 +102,10 @@ function LeftWidgetSelectionComponent(directPapaComponent, ddManager) {
             .jjAddClass('LeftListWidgetDiv')
             .jjSetData(widgetIndex);
         let widgetComp = new SngleWidgetView(me);
+
+        if(widgetIndex == lastScreenIndex){
+            widgetDiv.jjAddClass('LastScreenWidget');
+        }
 
         let nameAndIcon = staticData.getWidgetItemData(widgetIndex);
         widgetComp.setData(nameAndIcon.icon, nameAndIcon.name, widgetIndex);
@@ -81,8 +120,8 @@ function LeftWidgetSelectionComponent(directPapaComponent, ddManager) {
 
     /** Util **/
     function getIconDivByWidgetIndex(widgetIndex) {
-        let divList = listDiv.jjQueryAll('.LeftListWidgetDiv');
-        let widgetDiv = divList.find((div) => {
+        let divArray = externalDiv.jjQueryAll('.LeftListWidgetDiv');
+        let widgetDiv = divArray.find((div) => {
             return div.jjGetData() === widgetIndex;
         });
         return widgetDiv.jjQuery('.LeftListIconDiv');

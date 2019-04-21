@@ -38,6 +38,10 @@ function StaticDataStuff() {
         return widgetObjectArr.length;
     };
 
+    this.getScreenWidgetCount = function () {
+        return 5;
+    };
+
     this.getWidgetItemData = function (index) {
         return widgetObjectArr[index % widgetObjectArr.length];
     };
@@ -48,7 +52,7 @@ function StaticDataStuff() {
         return JJPower.enhance(papaDiv.firstChild);
     };
 
-    this.populateDivWithSVG = function(div, svgStr){
+    this.populateDivWithSVG = function (div, svgStr) {
         div.innerHTML = svgStr;
     };
 

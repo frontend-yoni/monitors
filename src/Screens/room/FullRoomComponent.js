@@ -26,6 +26,7 @@ function FullRoomComponent(directPapaComponent, ddManager) {
     this.setExternalDiv = function (divHTML) {
         completeRoomDiv = JJPower.enhance(divHTML)
             .jjAddClass('CompleteRoomDiv');
+        ddManager.setScreenRoomDiv(completeRoomDiv);
     };
 
     this.setData = function (tableScreensDataArrayI, wallScreenDataObjI) {

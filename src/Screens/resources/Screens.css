@@ -507,6 +507,46 @@ p {
 
 }
 
+.LeftListSectionTitleDiv {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 18px;
+    margin-top: 10px;
+}
+
+.LeftListSectionTitleDiv:first-child {
+    margin-top: 5px;
+}
+
+.LeftListSectionTitleDiv > p {
+    font-size: 15px;
+    margin: 0;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.LeftListSectionTitleDiv > .SectionTitleBorder {
+    flex-grow: 1;
+    height: 1px;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.SectionTitleBorder::before {
+    content: '';
+    position: absolute;
+    height: 1px;
+    left: 0;
+    right: 0;
+    border-bottom: 1px dashed #000;
+}
+
+.SectionTitleBorder.SectionTitleRightBorder::before {
+    right: -20px;
+}
+
 .LeftListWidgetDiv {
     width: 100%;
     box-sizing: border-box;
@@ -521,6 +561,10 @@ p {
     left: 0;
     box-sizing: border-box;
     border-bottom: 1px dotted #999;
+}
+
+.LastScreenWidget .LeftListWidgetBottomBorder {
+    visibility: hidden;
 }
 
 .LeftListIconDiv {
@@ -666,7 +710,7 @@ p {
     transition: var(--ddReleaseAnimationDuration) transform, var(--ddReleaseAnimationDuration) opacity;
 }
 
-.WidgetDDCloneReleaseAnimation.dismissClone{
+.WidgetDDCloneReleaseAnimation.dismissClone {
     opacity: 0;
     transition: var(--ddDismissAnimationDuration) transform, var(--ddDismissAnimationDuration) opacity;
 }
@@ -735,6 +779,6 @@ p {
     transition: flex-basis var(--bottomWidgetSizeAnimationDuration);
 }
 
-.BottomWidgetEntryDiv.RemoveBottomWidget > div:not(.WidgetDDCloneContainer){
+.BottomWidgetEntryDiv.RemoveBottomWidget > div:not(.WidgetDDCloneContainer) {
     opacity: 0;
 }
