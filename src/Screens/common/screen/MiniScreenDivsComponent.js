@@ -1,6 +1,8 @@
 function MiniScreenDivsComponent(directPapaComponent, layoutManager, ddManager) {
     let me = this;
     let staticData = StaticDataStuff.getInstance();
+    let widgetComponent = WidgetConfigModal.getInstance();
+
     /** CONSTANTS **/
 
     /** Externally Set ***/
@@ -101,12 +103,13 @@ function MiniScreenDivsComponent(directPapaComponent, layoutManager, ddManager) 
             .jjAddEventListener('mouseleave', onMouseLeave);
 
         let widgetDeleteButton = miniScreen.jjAppend('div')
-            .jjAddClass('MiniScreenWidgetDeleteButton', 'ScreenButton')
+            .jjAddClass('MiniScreenWidgetDeleteButton')
             .jjAddEventListener('click', onWidgetDeleteClick);
         staticData.populateDivWithSVG(widgetDeleteButton, SCREEN_EXPAND_BUTTON_SVG);
 
         let widgetDiv = miniScreen.jjAppend('div')
-            .jjAddClass('MiniScreenWidgetDiv');
+            .jjAddClass('MiniScreenWidgetDiv')
+            .jjAddEventListener('click', onWidgetClick);
 
 
         let widgetIndex = screenDataObj.getWidget(row, column);
@@ -157,6 +160,7 @@ function MiniScreenDivsComponent(directPapaComponent, layoutManager, ddManager) 
         let iconStr = staticData.getWidgetItemData(widgetIndex).icon;
         let widgetDiv = miniScreenDiv.jjQuery('.MiniScreenWidgetDiv');
         widgetDiv.innerHTML = iconStr;
+        widgetDiv.jjSetData(widgetIndex);
     }
 
     function removeHintWidgetSVG(miniScreenDiv) {
@@ -197,6 +201,11 @@ function MiniScreenDivsComponent(directPapaComponent, layoutManager, ddManager) 
     }
 
     /** Event Listeners **/
+    function onWidgetClick(e) {
+        let target = JJPower.enhance(e.currentTarget);
+        widgetComponent.openModal(target.jjGetData());
+    }
+
     function onMouseEnter(e) {
         let miniScreen = JJPower.enhance(e.currentTarget);
         if (ddManager.getIsDragging() && !getHasWidgetAlready(miniScreen)) {
@@ -238,7 +247,6 @@ function MiniScreenDivsComponent(directPapaComponent, layoutManager, ddManager) 
             dropMiniScreen.jjSetData(widgetIndex);
 
             screenDataObj.addWidget(+dropMiniScreen.getAttribute('row'), +dropMiniScreen.getAttribute('column'), widgetIndex);
-
         }
 
         dropHintWidgetDiv = undefined;

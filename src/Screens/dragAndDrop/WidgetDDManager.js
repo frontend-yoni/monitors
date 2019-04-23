@@ -5,10 +5,9 @@ function WidgetDDManager() {
     let staticDataStuff = StaticDataStuff.getInstance();
     let html = JJPower.query('html');
     /** Externally Set **/
-    let draggableClass;
-    let draggableList;
     let dropTarget;
     let dropTargetComponent;
+    let initiatorComponent;
     let leftListComponent;
     let screenRoomDiv;
     /** Internally Set **/
@@ -17,14 +16,13 @@ function WidgetDDManager() {
     let currentEvent;
     let startEvent;
     let isDragging;
+    let isFirstMove;
     let managementAnimationObject;
     let widgetData;
 
     /** Public API **/
-    this.setAsDraggable = function (draggableListI, draggableClassI) {
-        draggableList = draggableListI;
-        draggableClass = draggableClassI;
-        applyDraggable();
+    this.setAsDraggable = function (draggableContainer, draggableClass, dragInitiatorComponent) {
+        applyDraggable(draggableContainer, draggableClass, dragInitiatorComponent);
     };
 
     this.setLeftListComponent = function (leftListComponentI) {
@@ -72,8 +70,10 @@ function WidgetDDManager() {
     };
 
     /** Private Functions **/
-    function applyDraggable() {
-        draggableList.jjAddEventListener('mousedown', onMouseDown);
+    function applyDraggable(draggableContainer, draggableClass, dragInitiatorComponent) {
+        let thisForMouseDown = { draggableClass, dragInitiatorComponent };
+        let instanceOfMouseDownForGivenClass = onMouseDown.bind(thisForMouseDown);
+        draggableContainer.jjAddEventListener('mousedown', instanceOfMouseDownForGivenClass);
     }
 
     function startDDManagementAnimation() {
@@ -105,7 +105,7 @@ function WidgetDDManager() {
     /** Mouse **/
     function onMouseDown(e) {
         e.preventDefault();
-        let target = e.target.closest(`.${draggableClass}`);
+        let target = e.target.closest(`.${this.draggableClass}`);
         if (target) {
             ddItem = JJPower.enhance(target);
             document.jjAddEventListener('mouseup', onMouseUp);
@@ -113,6 +113,7 @@ function WidgetDDManager() {
             startEvent = e;
             currentEvent = e;
             isDragging = true;
+            isFirstMove = true;
             onDragStart(e);
         }
     }
@@ -120,10 +121,10 @@ function WidgetDDManager() {
     function onMouseMove(e) {
         e.preventDefault();
         currentEvent = e;
-        if (!isDragging) { //First move
-            onDragStart(e);
+        if (isFirstMove) { //First move
+            applyHTMLClasses();
         }
-        isDragging = true; //Only after first move consider it a drag.
+        isFirstMove = false;
     }
 
     function onMouseUp() {
@@ -140,8 +141,6 @@ function WidgetDDManager() {
     function onDragStart(e) {
         widgetData = staticDataStuff.getWidgetItemData(ddItem.jjGetIndex());
         scrollManager.setScrollContainer(screenRoomDiv, true, true);
-
-        applyHTMLClasses();
 
         cloneUtil.reactToDragStart(ddItem, startEvent);
         scrollManager.activateNow(startEvent);

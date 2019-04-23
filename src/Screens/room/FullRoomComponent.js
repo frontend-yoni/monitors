@@ -1,6 +1,7 @@
 function FullRoomComponent(directPapaComponent, ddManager) {
     let me = this;
     let layoutManager = new FullRoomLayoutManager(me);
+    let internalDDManager = new ScreenRoomInternalDDManager(ddManager);
     /** CONSTANTS **/
 
     /** Externally Set ***/
@@ -27,6 +28,7 @@ function FullRoomComponent(directPapaComponent, ddManager) {
         completeRoomDiv = JJPower.enhance(divHTML)
             .jjAddClass('CompleteRoomDiv');
         ddManager.setScreenRoomDiv(completeRoomDiv);
+        internalDDManager.setScreenRoomDiv(completeRoomDiv);
     };
 
     this.setData = function (tableScreensDataArrayI, wallScreenDataObjI) {

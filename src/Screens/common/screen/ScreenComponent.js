@@ -3,7 +3,7 @@ function ScreenComponent(directPapaComponent, layoutManager, ddManager) {
     /** CONSTANTS **/
     const BASE_WIDTH = 45;
     const BASE_HEIGHT = 9;
-
+    const BUTTON_HIT_AREA_SIZE = 30;
     /** Externally Set ***/
         //Structure
     let screenDiv;
@@ -129,9 +129,6 @@ function ScreenComponent(directPapaComponent, layoutManager, ddManager) {
         attachIcon(widthPlusButton, SCREEN_EXPAND_BUTTON_SVG);
 
         heightPlusButton = buttonsArea.jjAppend('div')
-            .jjAttr({
-                viewBox: '0 0 24 24'
-            })
             .jjAddClass('ScreenButton', 'ScreenPlusButton', 'ScreenHeightPlusButton')
             .jjAddEventListener('click', changeHeight);
         attachIcon(heightPlusButton, SCREEN_EXPAND_BUTTON_SVG);
@@ -153,7 +150,9 @@ function ScreenComponent(directPapaComponent, layoutManager, ddManager) {
     }
 
     function attachIcon(button, svgStr) {
-        button.innerHTML = svgStr;
+        let buttonIconDiv = button.jjAppend('div')
+            .jjAddClass('ScreenButtonIcon');
+        buttonIconDiv.innerHTML = svgStr;
     }
 
     function initializeDividers() {

@@ -1,6 +1,8 @@
 function CompleteMonitorPage(directPapaComponent, dataManager) {
     let me = this;
     let ddManager = WidgetDDManager.getInstance();
+    let widgetComponent = WidgetConfigModal.getInstance();
+
     /** CONSTANTS **/
 
     /** Externally Set ***/
@@ -16,6 +18,7 @@ function CompleteMonitorPage(directPapaComponent, dataManager) {
     let leftListDiv;
     let screenRoomDiv;
     let bottomRolodexDiv;
+    let modalDiv;
     //Components
     let roomComponent = new FullRoomComponent(me, ddManager);
     let leftListComp = new LeftWidgetSelectionComponent(me, ddManager);
@@ -60,9 +63,13 @@ function CompleteMonitorPage(directPapaComponent, dataManager) {
         leftListDiv = externalDiv.jjAppend('div')
             .jjAddClass('MonitorPageLeftListDiv');
 
+        modalDiv = externalDiv.jjAppend('div')
+            .jjAddClass('FullWidgetConfigModal');
+
         drawScreenRoom();
         drawLeftList();
         drawBottomRolodex();
+        prepModal();
     }
 
     function drawBottomRolodex() {
@@ -79,6 +86,10 @@ function CompleteMonitorPage(directPapaComponent, dataManager) {
     function drawLeftList() {
         leftListComp.setExternalDiv(leftListDiv);
         leftListComp.drawComponent();
+    }
+
+    function prepModal(){
+        widgetComponent.setExternalDiv(modalDiv);
     }
 
     /** Draw **/
