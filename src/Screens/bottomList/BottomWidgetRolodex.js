@@ -3,6 +3,7 @@ function BottomWidgetRolodex(directPapaComponent, ddManager) {
     let genUtils = JJGeneralUtils.getInstance();
     let staticData = StaticDataStuff.getInstance();
     let completeData = CompleteDataStructure.getInstance();
+    let modalComponent = WidgetConfigModal.getInstance();
 
     /** CONSTANTS **/
     const SCROLL_ANIMDATION_DURATION = 200;
@@ -106,7 +107,8 @@ function BottomWidgetRolodex(directPapaComponent, ddManager) {
 
         let iconDiv = entryDiv.jjAppend('div')
             .jjAddClass('BottomWidgetIconDiv')
-            .jjSetData(widgetData);
+            .jjSetData(widgetData)
+            .jjAddEventListener('click', onWidgetClick);
 
         iconDiv.innerHTML = widgetData.icon;
 
@@ -145,6 +147,12 @@ function BottomWidgetRolodex(directPapaComponent, ddManager) {
     }
 
     /** Event Listener **/
+    function onWidgetClick(e){
+        let target = JJPower.enhance(e.currentTarget);
+        let data = target.jjGetData().index;
+        modalComponent.openModal(target, data);
+    }
+
     function onMouseEnter(e) {
         if (ddManager.getIsDragging()) {
             let widgetIndex = ddManager.getDDItem().jjGetData();

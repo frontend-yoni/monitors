@@ -1,7 +1,7 @@
 function MiniScreenDivsComponent(directPapaComponent, layoutManager, ddManager) {
     let me = this;
     let staticData = StaticDataStuff.getInstance();
-    let widgetComponent = WidgetConfigModal.getInstance();
+    let modalComponent = WidgetConfigModal.getInstance();
 
     /** CONSTANTS **/
 
@@ -203,7 +203,8 @@ function MiniScreenDivsComponent(directPapaComponent, layoutManager, ddManager) 
     /** Event Listeners **/
     function onWidgetClick(e) {
         let target = JJPower.enhance(e.currentTarget);
-        widgetComponent.openModal(target.jjGetData());
+        let data = target.jjClosest('.MiniScreenDiv').jjGetData();
+        modalComponent.openModal(target, target.jjGetData(), data);
     }
 
     function onMouseEnter(e) {

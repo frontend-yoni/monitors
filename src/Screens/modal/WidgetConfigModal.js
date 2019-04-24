@@ -8,6 +8,7 @@ function WidgetConfigModal() {
         //Structure
     let externalDiv;
     //Data
+    let widgetIconDiv;
     let configWidget;
 
     /** Internally Set **/
@@ -23,7 +24,8 @@ function WidgetConfigModal() {
         externalDiv.addEventListener('click', onModalClick);
     };
 
-    this.openModal = function (configWidgetI) {
+    this.openModal = function (widgetIconDivI, configWidgetI) {
+        widgetIconDiv = widgetIconDivI;
         configWidget = configWidgetI;
         showModal();
     };
@@ -33,10 +35,6 @@ function WidgetConfigModal() {
     };
 
     /** Construction **/
-    function showModal() {
-        construct();
-    }
-
     function construct() {
         externalDiv.jjClear();
         externalDiv.jjAddClass('ModalOpen');
@@ -54,6 +52,23 @@ function WidgetConfigModal() {
     }
 
     function populateTitle() {
+        addCloseButton();
+
+        let widgetIndex = configWidget;
+
+        let widgetIconDiv = titleDiv.jjAppend('div')
+            .jjAddClass('ModalTitleIconDiv');
+        let titleWidgetNameP = titleDiv.jjAppend('p')
+            .jjAddClass('ModalTitleNAmeP');
+
+        let widgetIconAndName = staticData.getWidgetItemData(widgetIndex);
+
+
+        staticData.populateDivWithSVG(widgetIconDiv, widgetIconAndName.icon);
+        titleWidgetNameP.jjText(widgetIconAndName.name);
+    }
+
+    function addCloseButton() {
         closeButton = titleDiv.jjAppend('div')
             .jjAddClass('ModalCloseButton')
             .jjAddEventListener('click', hideMe);
@@ -65,8 +80,16 @@ function WidgetConfigModal() {
     }
 
     /** Actions **/
+    function showModal() {
+        widgetIconDiv.jjAddClass('WidgetIconSelectedForModal');
+        construct();
+    }
+
     function hideMe() {
         externalDiv.jjRemoveClass('ModalOpen');
+        if (widgetIconDiv) {
+            widgetIconDiv.jjRemoveClass('WidgetIconSelectedForModal');
+        }
     }
 
     /** Event Listeners **/

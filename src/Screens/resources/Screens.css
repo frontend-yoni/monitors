@@ -687,6 +687,7 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .BottomWidgetIconDiv > svg {
@@ -842,8 +843,14 @@ p {
 
 .ConfigModalTitleDiv {
     width: 100%;
+    box-sizing: border-box;
     height: 50px;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 30px;
+    padding-left: 30px;
 }
 
 .ModalCloseButton {
@@ -871,6 +878,27 @@ p {
     transform-origin: center;
 }
 
-.ModalCloseButton:hover > .ModalCloseButtonIcon{
+.ModalCloseButton:hover > .ModalCloseButtonIcon {
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.BottomWidgetIconDiv.WidgetIconSelectedForModal, .MiniScreenWidgetDiv.WidgetIconSelectedForModal {
+    background: rgb(255, 255, 255);
+    border-radius: 50%;
+    border: 2px solid black;
+    box-shadow: 0 0 5px #666;
+}
+
+.ModalTitleIconDiv {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ModalTitleNAmeP {
+    font-size: 20px;
+    margin: 0;
+    margin-left: 10px;
 }
