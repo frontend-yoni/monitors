@@ -90,6 +90,7 @@ function CompleteMonitorPage(directPapaComponent, dataManager) {
 
     function prepModal(){
         widgetComponent.setExternalDiv(modalDiv);
+        //widgetComponent.openModal(JJPower.enhance(document.createElement('div')), 2);
     }
 
     /** Draw **/

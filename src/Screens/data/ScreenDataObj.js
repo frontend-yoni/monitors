@@ -4,7 +4,7 @@ function ScreenDataObj(width = 1, height = 1) {
     this.width = width;
     this.height = height;
     this.widgetMatrix = [];
-
+    this.widgetInstanceDataMatrix = [];
     /* Measurements */
     this.widthPixel;
     this.heightPixel;
@@ -29,11 +29,16 @@ function ScreenDataObj(width = 1, height = 1) {
         this.topPixel = undefined;
     }
 
-    this.addWidget = function (row, column, widgetIndex) {
+    this.addWidget = function (row, column, widgetIndex, widgetInstanceData) {
         if (!this.widgetMatrix[row]) {
             this.widgetMatrix[row] = [];
         }
         this.widgetMatrix[row][column] = widgetIndex;
+
+        if (!this.widgetInstanceDataMatrix[row]) {
+            this.widgetInstanceDataMatrix[row] = [];
+        }
+        this.widgetInstanceDataMatrix[row][column] = widgetInstanceData;
     };
 
     this.removeWidget = function (row, column) {

@@ -2,15 +2,16 @@ function CompleteDataStructure() {
     let me = this;
 
     this.tableScreenDataAray = [];
-    this.selectedWidgetsArray = [];
+    this.OtherWidgetsArray = [];
     this.wallScreenData = new ScreenDataObj();
+    this.widgetIDToFieldValues = {};
 
     this.addTableScreen = function (screenData) {
         me.tableScreenDataAray.push(screenData);
     };
 
-    this.addSelectedWidget = function (widgetIndex) {
-        me.selectedWidgetsArray.unshift(widgetIndex);
+    this.addSelectedWidget = function (widgetInstance) {
+        me.OtherWidgetsArray.unshift(widgetInstance);
     };
 
     this.setWallScreen = function (screenObj) {
@@ -34,10 +35,10 @@ function CompleteDataStructure() {
 
         me.setWallScreen(new ScreenDataObj(3, 3));
 
-        me.addSelectedWidget(8);
-        me.addSelectedWidget(6);
-        me.addSelectedWidget(9);
-        me.addSelectedWidget(7);
+        me.addSelectedWidget(new WidgetInstanceDataObj(8));
+        me.addSelectedWidget(new WidgetInstanceDataObj(6));
+        me.addSelectedWidget(new WidgetInstanceDataObj(9));
+        me.addSelectedWidget(new WidgetInstanceDataObj(7));
     }
 
 

@@ -203,8 +203,10 @@ function MiniScreenDivsComponent(directPapaComponent, layoutManager, ddManager) 
     /** Event Listeners **/
     function onWidgetClick(e) {
         let target = JJPower.enhance(e.currentTarget);
-        let data = target.jjClosest('.MiniScreenDiv').jjGetData();
-        modalComponent.openModal(target, target.jjGetData(), data);
+        let miniScreenDiv = target.jjClosest('.MiniScreenDiv');
+        let data = miniScreenDiv.jjGetData();
+        let widgetInstance = miniScreenDiv.jjWidgetInstance;
+        modalComponent.openModal(target, data, widgetInstance);
     }
 
     function onMouseEnter(e) {
@@ -244,10 +246,13 @@ function MiniScreenDivsComponent(directPapaComponent, layoutManager, ddManager) 
         ddManager.setDropTarget(dropHintWidgetDiv);
         if (dropHintWidgetDiv) {
             let widgetIndex = ddManager.getDDData();
+            let widgetInstanceData = createWidgetData(widgetIndex);
+
             dropMiniScreen.setAttribute('hasWidget', true);
             dropMiniScreen.jjSetData(widgetIndex);
 
-            screenDataObj.addWidget(+dropMiniScreen.getAttribute('row'), +dropMiniScreen.getAttribute('column'), widgetIndex);
+            dropMiniScreen.jjWidgetInstance = widgetInstanceData;
+            screenDataObj.addWidget(+dropMiniScreen.getAttribute('row'), +dropMiniScreen.getAttribute('column'), widgetIndex, widgetInstanceData);
         }
 
         dropHintWidgetDiv = undefined;
@@ -256,5 +261,11 @@ function MiniScreenDivsComponent(directPapaComponent, layoutManager, ddManager) 
     /** State **/
     function getHasWidgetAlready(miniScreen) {
         return miniScreen.getAttribute('hasWidget');
+    }
+
+    /** Data **/
+    function createWidgetData(widgetIndex) {
+        let dataObj = new WidgetInstanceDataObj(widgetIndex);
+        return dataObj;
     }
 }

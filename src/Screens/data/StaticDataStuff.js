@@ -31,6 +31,8 @@ function StaticDataStuff() {
         'Terracotta Flower Pot'
     ];
 
+    let widgetIndexToFieldsMap = createWidgetIndexToFieldsMap();
+
     let widgetObjectArr = createAvailableWidgetArr();
 
     /*** Public APIs **/
@@ -71,8 +73,29 @@ function StaticDataStuff() {
             icon: iconList[index],
             name: nameList[index],
             index: index,
-            dragToScreen: dragToScreen
+            dragToScreen: dragToScreen,
+            configFields: widgetIndexToFieldsMap[index]
         }
+    }
+
+    /** Mock **/
+    function createWidgetIndexToFieldsMap() {
+        let map = {};
+        for (let i = 0; i < iconList.length; i++) {
+            map[i] = createConfigFieldsByIndex(i);
+        }
+        return map;
+    }
+
+    function createConfigFieldsByIndex(widgetIndex) {
+        let fieldsCount = ((widgetIndex + 1) * 2) % 5 + (widgetIndex * 3) % 7;
+        fieldsCount = Math.max(5, fieldsCount);
+
+        let fieldsArr = [];
+        for (let i = 0; i < fieldsCount; i++) {
+            fieldsArr.push('Configuration Filed ' + (i + 1));
+        }
+        return fieldsArr;
     }
 }
 

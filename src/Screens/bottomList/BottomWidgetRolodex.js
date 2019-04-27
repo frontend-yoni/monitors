@@ -1,7 +1,7 @@
 function BottomWidgetRolodex(directPapaComponent, ddManager) {
     let me = this;
     let genUtils = JJGeneralUtils.getInstance();
-    let staticData = StaticDataStuff.getInstance();
+    let staticUtil = StaticDataStuff.getInstance();
     let completeData = CompleteDataStructure.getInstance();
     let modalComponent = WidgetConfigModal.getInstance();
 
@@ -83,8 +83,8 @@ function BottomWidgetRolodex(directPapaComponent, ddManager) {
     }
 
     function addInitialWidgets() {
-        for (let i = 0; i < completeData.selectedWidgetsArray.length; i++) {
-            createWidgetEntry(completeData.selectedWidgetsArray[i]);
+        for (let i = 0; i < completeData.OtherWidgetsArray.length; i++) {
+            createWidgetEntry(completeData.OtherWidgetsArray[i]);
         }
 
         dropHintWidgetDiv = widgetListDiv.jjAppend('div')
@@ -93,24 +93,25 @@ function BottomWidgetRolodex(directPapaComponent, ddManager) {
             .jjAddClass('BottomWidgetIconDiv');
     }
 
-    function createWidgetEntry(widgetIndex) {
-        let widgetData = staticData.getWidgetItemData(widgetIndex);
+    function createWidgetEntry(widgetInstance) {
+        let staticInfo = staticUtil.getWidgetItemData(widgetInstance.widgetIndex);
 
         let entryDiv = widgetListDiv.jjAppend('div')
             .jjAddClass('BottomWidgetEntryDiv')
-            .jjSetData(widgetData);
+            .jjSetData(staticInfo);
+        entryDiv.jjWidgetInstance = widgetInstance;
 
         let deleteButton = entryDiv.jjAppend('div')
             .jjAddClass('BottomWidgetEntryDivDeleteButton', 'ScreenButton')
             .jjAddEventListener('click', onWidgetDeleteClick);
-        staticData.populateDivWithSVG(deleteButton, SCREEN_EXPAND_BUTTON_SVG);
+        staticUtil.populateDivWithSVG(deleteButton, SCREEN_EXPAND_BUTTON_SVG);
 
         let iconDiv = entryDiv.jjAppend('div')
             .jjAddClass('BottomWidgetIconDiv')
-            .jjSetData(widgetData)
+            .jjSetData(staticInfo)
             .jjAddEventListener('click', onWidgetClick);
 
-        iconDiv.innerHTML = widgetData.icon;
+        iconDiv.innerHTML = staticInfo.icon;
 
         return entryDiv;
     }
@@ -128,7 +129,8 @@ function BottomWidgetRolodex(directPapaComponent, ddManager) {
     }
 
     function addNewWidgetInsteadOfHint(widgetIndex) {
-        let entryDiv = createWidgetEntry(widgetIndex);
+        let widgetInstance = new WidgetInstanceDataObj(widgetIndex);
+        let entryDiv = createWidgetEntry(widgetInstance);
 
         widgetListDiv.appendChild(entryDiv);
         widgetListDiv.appendChild(dropHintWidgetDiv);
@@ -147,16 +149,17 @@ function BottomWidgetRolodex(directPapaComponent, ddManager) {
     }
 
     /** Event Listener **/
-    function onWidgetClick(e){
+    function onWidgetClick(e) {
         let target = JJPower.enhance(e.currentTarget);
         let data = target.jjGetData().index;
-        modalComponent.openModal(target, data);
+        let widgetInstance = target.closest('.BottomWidgetEntryDiv').jjWidgetInstance;
+        modalComponent.openModal(target, data, widgetInstance);
     }
 
     function onMouseEnter(e) {
         if (ddManager.getIsDragging()) {
             let widgetIndex = ddManager.getDDItem().jjGetData();
-            dropWidgetData = staticData.getWidgetItemData(widgetIndex);
+            dropWidgetData = staticUtil.getWidgetItemData(widgetIndex);
             ddManager.setDropTargetComponent(me);
             showDropHint();
         }
@@ -175,7 +178,7 @@ function BottomWidgetRolodex(directPapaComponent, ddManager) {
         let dropBCRect = ddManager.getWidgetItemBCRect(widgetIndex);
 
         let indexInList = widgetListDiv.jjGetChildren().indexOf(deleteDiv);
-        genUtils.removeFromArrayByIndex(completeData.selectedWidgetsArray, indexInList);
+        genUtils.removeFromArrayByIndex(completeData.OtherWidgetsArray, indexInList);
 
         let dismissCloneUtil = new WidgetDDCloneUtil();
         dismissCloneUtil.dismissWidgetDiv(widgetIconDiv, dropBCRect);
@@ -184,7 +187,7 @@ function BottomWidgetRolodex(directPapaComponent, ddManager) {
             .jjAddEventListener('transitionend', onRemoveAnimationEnd);
 
         //Inner Function
-        function onRemoveAnimationEnd(){
+        function onRemoveAnimationEnd() {
             if (e.target !== e.currentTarget) {
                 return;
             }

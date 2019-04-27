@@ -10,9 +10,10 @@ function WidgetConfigModal() {
     //Data
     let widgetIconDiv;
     let configWidget;
-
+    let widgetInstance;
     /** Internally Set **/
-        //Structure
+    let bodyComponent = new WidgetConfigModalBody(me);
+    //Structure
     let actualModalDiv;
     let titleDiv;
     let closeButton;
@@ -24,9 +25,10 @@ function WidgetConfigModal() {
         externalDiv.addEventListener('click', onModalClick);
     };
 
-    this.openModal = function (widgetIconDivI, configWidgetI) {
+    this.openModal = function (widgetIconDivI, configWidgetI, widgetInstanceI) {
         widgetIconDiv = widgetIconDivI;
         configWidget = configWidgetI;
+        widgetInstance = widgetInstanceI;
         showModal();
     };
 
@@ -49,6 +51,13 @@ function WidgetConfigModal() {
             .jjAddClass('ConfigModalBodyDiv');
 
         populateTitle();
+        buildBody();
+    }
+
+    function buildBody() {
+        bodyComponent.setWidgetData(configWidget);
+        bodyComponent.setExternalDiv(bodyDiv);
+        bodyComponent.drawComponent();
     }
 
     function populateTitle() {
