@@ -80,8 +80,8 @@ function ScreenComponent(directPapaComponent, layoutManager, ddManager) {
         attachBorderAndBG();
         attachBase();
         attachDividers();
-        attachPlusButtons();
         attachMiniScreens();
+        attachPlusButtons();
     }
 
     function attachMiniScreens() {

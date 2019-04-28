@@ -55,11 +55,11 @@ function FullRoomComponent(directPapaComponent, ddManager) {
     }
 
     function construct() {
-        wallContainerDiv = completeRoomDiv.jjAppend('div')
-            .jjAddClass('CompleteRoomWallContainerDiv');
-
         tableDiv = completeRoomDiv.jjAppend('div')
             .jjAddClass('CompleteRoomTableDiv');
+
+        wallContainerDiv = completeRoomDiv.jjAppend('div')
+            .jjAddClass('CompleteRoomWallContainerDiv');
 
         wallDiv = wallContainerDiv.jjAppend('div')
             .jjAddClass('CompleteRoomWallDiv');
